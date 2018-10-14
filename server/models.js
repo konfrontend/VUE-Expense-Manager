@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
-const TestSchema = new mongoose.Schema({
-	title: String,
-	updated_date: { type: Date, default: Date.now },
+const PostSchema = new mongoose.Schema({
+	text: {
+		type: String,
+		required: true
+	},
+}, {
+	timestamps: true
 });
-mongoose.model('Test', TestSchema);
+mongoose.model('Post', PostSchema);
