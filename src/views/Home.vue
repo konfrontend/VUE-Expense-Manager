@@ -1,11 +1,20 @@
 <template>
-	<div class="home">
-		<img alt="Vue logo" src="../assets/logo.png">
-		<HelloWorld msg="Welcome to Your Vue.js App"/>
-		<div v-for="(post, index) in posts" :item="post" :index="index" :key="post._id">
-			{{post.text}}
-		</div>
-	</div>
+	<v-layout row wrap >
+		<v-flex xs6 >
+			<img alt="Vue logo" src="../assets/logo.png">
+		</v-flex>
+		<v-flex xs6>
+			<div v-for="(post, index) in posts" :item="post" :index="index" :key="post._id">
+				{{post.text}}
+			</div>
+		</v-flex>
+
+
+		<v-flex xs12>
+			<HelloWorld msg="Welcome to Your Vue.js App"/>
+		</v-flex>
+
+	</v-layout>
 </template>
 
 <script>
