@@ -1,22 +1,7 @@
 <template>
 	<v-app id="app">
-		<v-navigation-drawer app dark v-model="drawer" mobile-break-point="1024" class="blue lighten-3">
-			<v-list>
-				<v-list-tile
-					v-for="item in items"
-					:key="item.title"
-					@click=""
-				>
-					<v-list-tile-action>
-						<v-icon>{{ item.icon }}</v-icon>
-					</v-list-tile-action>
+		<AppNav :open="drawer"></AppNav>
 
-					<v-list-tile-content>
-						<v-list-tile-title>{{ item.title }}</v-list-tile-title>
-					</v-list-tile-content>
-				</v-list-tile>
-			</v-list>
-		</v-navigation-drawer>
 		<v-toolbar app id="nav">
 			<v-icon @click="drawer = !drawer">fas fa-list</v-icon>
 			<v-toolbar-title>App Title</v-toolbar-title>
@@ -45,23 +30,20 @@
 </template>
 
 <script>
+	import AppNav from '@/components/AppNav';
+
 	export default {
+		components: { AppNav },
+		data: () => ({
+			drawer: true,
+		}),
 		props: {
 			icon: {
 				type: String,
 				default: '$vuetify.icons.cancel'
 			}
 		},
-		data: () => ({
-			drawer: true,
-			items: [{
-				title: 'Menu Category 1',
-				icon: '$vuetify.icons.cancel'
-			},{
-				title: 'Menu Category 2',
-				icon: '$vuetify.icons.cancel'
-			}]
-		})
+
 	}
 </script>
 

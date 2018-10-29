@@ -7,19 +7,23 @@ import store from './store'
 
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'vuetify/dist/vuetify.min.css'
-import colors from 'vuetify/es5/util/colors'
+// import colors from 'vuetify/es5/util/colors'
 
 Vue.use(Vuetify, {
 	iconfont: 'fa',
 	icons: {
 		'cancel': 'fas fa-ban',
 		'menu': 'fas fa-ellipsis-v',
+		'user': 'fas fa-user',
+		'total': 'fas fa-coins',
+		'budget': 'fas fa-wallet',
+		'bank': 'fas fa-piggy-bank'
 	},
 	theme: {
-		primary: colors.purple,
-		secondary: colors.grey.darken1,
-		accent: colors.shades.black,
-		error: colors.red.accent3
+		// primary: colors.orange,
+		// secondary: colors.grey.darken1,
+		// accent: colors.shades.black,
+		// error: colors.red.accent3,
 	},
 	options: {
 		//will also generate a css variable for each theme color, which you can then use in your component's <style> blocks.
