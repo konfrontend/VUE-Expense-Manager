@@ -9,15 +9,19 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import 'vuetify/dist/vuetify.min.css'
 // import colors from 'vuetify/es5/util/colors'
 
+
 Vue.use(Vuetify, {
 	iconfont: 'fa',
 	icons: {
 		'cancel': 'fas fa-ban',
-		'menu': 'fas fa-ellipsis-v',
-		'user': 'fas fa-user',
-		'total': 'fas fa-coins',
+
 		'budget': 'fas fa-wallet',
-		'bank': 'fas fa-piggy-bank'
+		'bank': 'fas fa-piggy-bank',
+		'login': 'fas fa-key',
+		'menu': 'fas fa-ellipsis-v',
+		'settings': 'fas fa-cogs',
+		'total': 'fas fa-coins',
+		'user': 'fas fa-user',
 	},
 	theme: {
 		// primary: colors.orange,
