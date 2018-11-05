@@ -1,15 +1,7 @@
 <template>
 	<v-layout row wrap justify-center>
-		<!--<v-flex xs6 >-->
-		<!--<img alt="Vue logo" src="../assets/logo.png">-->
-		<!--</v-flex>-->
-		<!--<v-flex xs6>-->
-		<!--<div v-for="(post, index) in posts" :item="post" :index="index" :key="post._id">-->
-		<!--{{post.text}}-->
-		<!--</div>-->
-		<!--</v-flex>-->
-
 		<v-container>
+
 			<v-layout align-center class="mb-4">
 				<strong class="display-1 font-weight-regular mr-4">9</strong>
 				<v-layout column justify-end>
@@ -19,8 +11,8 @@
 			</v-layout>
 
 			<v-layout row justify-space-around>
-				<v-btn>+</v-btn>
-				<v-btn>-</v-btn>
+				<v-btn fab class="primary"><v-icon>{{$vuetify.icons.add}}</v-icon></v-btn>
+				<v-btn fab class="secondary"><v-icon>{{$vuetify.icons.remove}}</v-icon></v-btn>
 			</v-layout>
 
 			<v-timeline >

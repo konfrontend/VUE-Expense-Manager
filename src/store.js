@@ -14,8 +14,47 @@ export default new Vuex.Store({
 				value: 400,
 				color: 'success'
 			}
+		},
+		categories: {
+			rent: {
+				color: 'orange',
+				icon: 'fas fa-home'
+			},
+			food: {
+				color: 'green',
+				icon: 'fas fa-utensils'
+			},
+			bills: {
+				color: 'red',
+				icon: 'fas fa-file-invoice-dollar'
+			},
+			fun: {
+				color: 'purple',
+				icon: 'fas fa-cocktail'
+			},
+			health: {
+				color: 'blue',
+				icon: 'fas fa-heartbeat'
+			},
+			gifts: {
+				color: 'brown',
+				icon: 'fas fa-gift'
+			},
+			clothes: {
+				color: 'grey',
+				icon: 'fas fa-tshirt'
+			},
 		}
 	},
-	mutations: {},
-	actions: {}
+	mutations: {
+		addCategory(state, payload) {
+			state.categories[payload.name] = {
+				color: payload.color,
+				icon: payload.icon.code
+			}
+		}
+	},
+	actions: {
+
+	}
 })

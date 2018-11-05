@@ -1,5 +1,5 @@
 <template>
-	<v-navigation-drawer app dark v-model="open" mobile-break-point="1024" class="blue lighten-3">
+	<v-navigation-drawer app dark :value="open" mobile-break-point="1024" class="">
 
 		<v-layout column justify-space-between fill-height>
 			<div>
@@ -20,7 +20,6 @@
 
 
 				<v-divider></v-divider>
-
 
 				<v-list>
 
@@ -49,7 +48,7 @@
 							</v-list-tile-content>
 						</v-list-tile>
 
-						<v-list-tile v-for="(scale, name) in budget" avatar>
+						<v-list-tile v-for="(scale, name) in budget" :key="name" avatar>
 							<v-list-tile-content>
 								<v-list-tile-title>{{name}} - {{scale.value}} / {{scale.limit}}</v-list-tile-title>
 								<v-progress-linear :value="scale.value / scale.limit * 100" :color="scale.color"></v-progress-linear>
@@ -66,7 +65,6 @@
 
 				<v-list-tile
 						avatar
-						@click=""
 				>
 					<v-avatar>
 						<v-icon>{{$vuetify.icons.login}}</v-icon>
@@ -79,7 +77,6 @@
 				<v-list-tile
 						avatar
 						small
-						@click=""
 				>
 					<v-avatar>
 						<v-icon>{{$vuetify.icons.settings}}</v-icon>
@@ -106,13 +103,6 @@
 			open: Boolean
 		},
 		data: () => ({
-			// items: [{
-			// 	category: 'Menu Category 1',
-			// 	icon: '$vuetify.icons.cancel'
-			// }, {
-			// 	category: 'Menu Category 2',
-			// 	icon: '$vuetify.icons.cancel'
-			// }],
 			loader: null,
 			loading3: false,
 		}),

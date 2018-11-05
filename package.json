@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.4.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "axios": "^0.18.0",
+    "babel-plugin-dynamic-import-webpack": "^1.1.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.4",
