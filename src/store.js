@@ -44,6 +44,52 @@ export default new Vuex.Store({
 				color: 'grey',
 				icon: 'fas fa-tshirt'
 			},
+		},
+		timeline: {
+			[new Date('December 24, 2018')]: [
+				{
+					color: 'pink',
+					type: 1,
+					category: 'category name',
+					date: new Date('December 24, 2018 03:24:00'),
+					value: 100,
+					description: 'Description goes here'
+				},
+				{
+					color: 'amber',
+					type: 1,
+					category: '1990',
+					date: new Date('December 24, 2018 05:24:00'),
+					value: 100,
+					description: ''
+				},
+				{
+					color: 'orange',
+					type: 0,
+					category: '2000',
+					date: new Date('December 24, 2018 14:24:00'),
+					value: 100,
+					description: ''
+				}
+			],
+			[new Date('December 19, 2018')]: [
+				{
+					color: 'cyan',
+					type: 1,
+					category: 'lorem ipsum',
+					date: new Date('December 19, 2018 12:24:00'),
+					value: 100,
+					description: 'Description goes here'
+				},
+				{
+					color: 'green',
+					type: 0,
+					category: 'lorem ipsum dolor',
+					date: new Date('December 19, 2018 14:24:00'),
+					value: 100,
+					description: ''
+				},
+			],
 		}
 	},
 	mutations: {

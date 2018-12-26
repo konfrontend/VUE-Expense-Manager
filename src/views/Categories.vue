@@ -23,9 +23,8 @@
 						xs12
 						md4
 				>
-					<transition name="scroll-y-transition" appear >
+					<transition name="scroll-y-transition" appear>
 						<v-item>
-
 							<v-card
 									slot-scope="{ active, toggle }"
 									:color="active ? 'primary' : n.color"
@@ -44,8 +43,6 @@
 									</v-layout>
 								</v-container>
 							</v-card>
-
-
 						</v-item>
 					</transition>
 				</v-flex>

@@ -24,6 +24,7 @@ Vue.use(Vuetify, {
 		'settings': 'fas fa-cogs',
 		'total': 'fas fa-coins',
 		'user': 'fas fa-user',
+		'time': 'far fa-clock'
 
 	},
 	theme: {

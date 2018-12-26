@@ -27,14 +27,6 @@ class Service {
 	}
 
 	static getIcons() {
-		// $.get('https://rawgit.com/FortAwesome/Font-Awesome/master/src/icons.yml', function(data){
-		// 	var parsedYaml = jsyaml.load(data);
-		// 	var body = $('body');
-		//
-		// 	$.each(parsedYaml.icons, function(index, icon){
-		// 		body.append('<i class="fa fa-' + icon.id + '"></i>');
-		// 	})
-		// });
 		return new Promise(async (resolve, rej) => {
 			try {
 				const res = await axios.get('https://rawgit.com/FortAwesome/Font-Awesome/master/src/icons.yml');

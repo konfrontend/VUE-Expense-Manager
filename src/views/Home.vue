@@ -1,23 +1,26 @@
 <template>
 	<v-layout row wrap justify-center>
-		<v-container>
-
+		<v-container v-for="(entries, date) in dates" :key="date">
 			<v-layout align-center class="mb-4">
-				<strong class="display-1 font-weight-regular mr-4">9</strong>
+				<strong class="display-1 font-weight-regular mr-4">{{ getDay(date) }}</strong>
 				<v-layout column justify-end>
-					<div class="title font-weight-light">Tuesday</div>
-					<div class="text-uppercase font-weight-light">February 2015</div>
+					<div class="title font-weight-light">{{getDayName(date)}}</div>
+					<div class="text-uppercase font-weight-light">{{getMonthName(date)}} {{getYear(date)}}</div>
 				</v-layout>
 			</v-layout>
 
 			<v-layout row justify-space-around>
-				<v-btn fab class="primary"><v-icon>{{$vuetify.icons.add}}</v-icon></v-btn>
-				<v-btn fab class="secondary"><v-icon>{{$vuetify.icons.remove}}</v-icon></v-btn>
+				<v-btn fab class="primary" @click="dialogIncome">
+					<v-icon>{{$vuetify.icons.add}}</v-icon>
+				</v-btn>
+				<v-btn fab class="secondary" @click="dialogOutcome">
+					<v-icon>{{$vuetify.icons.remove}}</v-icon>
+				</v-btn>
 			</v-layout>
 
-			<v-timeline >
+			<v-timeline>
 				<v-timeline-item
-						v-for="(entry, i) in items"
+						v-for="(entry, i) in [...entries].reverse()"
 						:color="entry.color"
 						:key="i"
 						:left="Boolean(entry.type)"
@@ -32,23 +35,20 @@
 					</div>
 					<div
 							slot="opposite"
-					>{{entry.date}}</div>
+					>{{getEntryTime(entry.date)}}
+						{{entry.description}}
+					</div>
 
 				</v-timeline-item>
 
 			</v-timeline>
 		</v-container>
-
-
-		<v-container>
-			<v-layout align-center>
-				<strong class="display-1 font-weight-regular mr-4">9</strong>
-				<v-layout column justify-end>
-					<div class="title font-weight-light">Tuesday</div>
-					<div class="text-uppercase font-weight-light">February 2015</div>
-				</v-layout>
-			</v-layout>
-		</v-container>
+		<v-dialog v-model="isDialog.income" width="500" persistent>
+			<timeline-entry :title="'Income'" @dismiss="isDialog.income = false"></timeline-entry>
+		</v-dialog>
+		<v-dialog v-model="isDialog.outcome" width="500" >
+			<timeline-entry :title="'Outcome'" @dismiss="isDialog.outcome = false"></timeline-entry>
+		</v-dialog>
 
 	</v-layout>
 </template>
@@ -56,6 +56,7 @@
 <script>
 	// @ is an alias to /src
 	import { Service } from '@/HttpService';
+	import TimelineEntry from "../components/forms/TimelineEntry";
 
 	export default {
 		name: 'home',
@@ -63,46 +64,18 @@
 			return {
 				posts: [],
 				show: false,
-				items: [
-					{
-						color: 'cyan',
-						type: 1,
-						category: 'lorem ipsum',
-						date: new Date(),
-						value: 100
-					},
-					{
-						color: 'green',
-						type: 0,
-						category: 'lorem ipsum dolor',
-						date: new Date(),
-						value: 100
-					},
-					{
-						color: 'pink',
-						type: 1,
-						category: 'category name',
-						date: new Date(),
-						value: 100
-					},
-					{
-						color: 'amber',
-						type: 1,
-						category: '1990',
-						date: new Date(),
-						value: 100
-					},
-					{
-						color: 'orange',
-						type: 0,
-						category: '2000',
-						date: new Date(),
-						value: 100
-					}
-				].reverse()
+				isDialog: {
+					income: false,
+					outcome: false
+				},
 			}
 		},
-		components: {},
+		components: { TimelineEntry },
+		computed: {
+			dates() {
+				return this.$store.state.timeline;
+			}
+		},
 		async created() {
 			// Service.createPost({
 			// 	"text": Math.random() + ''
@@ -121,10 +94,28 @@
 			}
 
 
-
 		},
 		mounted() {
 
+		},
+		methods: {
+			getDay(dateStr) {
+				return new Date(dateStr).getDate();
+			},
+			getYear: (dateStr) => new Date(dateStr).getFullYear(),
+			getDayName(dateStr) {
+				return new Date(dateStr).toLocaleDateString('en-us', { weekday: 'long' });
+			},
+			getMonthName(dateStr) {
+				return new Date(dateStr).toLocaleDateString('en-us', { month: 'long' });
+			},
+			getEntryTime: (dateStr) => new Date(dateStr).toLocaleTimeString('en-us', {}),
+			dialogIncome() {
+				this.isDialog.income = true;
+			},
+			dialogOutcome() {
+				this.isDialog.outcome = true;
+			}
 		}
 	}
 </script>

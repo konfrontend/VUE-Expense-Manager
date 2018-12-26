@@ -7,7 +7,7 @@
 			<v-spacer></v-spacer>
 			<v-toolbar-items class="hidden-sm-and-down">
 				<v-btn flat to="/">Timeline</v-btn>
-				<v-btn flat to="/regular">Regular</v-btn>
+				<!--<v-btn flat to="/regular">Regular</v-btn>-->
 				<v-btn flat to="/reports">Reports</v-btn>
 				<v-btn flat :ripple="false" to="/categories">Categories</v-btn>
 			</v-toolbar-items>
@@ -19,7 +19,7 @@
 			</v-container>
 		</v-content>
 		<v-footer app inset class="justify-center">
-			&copy;{{new Date().getFullYear()}}
+			&copy;Copy text {{new Date().getFullYear()}}
 		</v-footer>
 	</v-app>
 </template>
