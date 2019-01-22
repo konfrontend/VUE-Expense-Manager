@@ -10,10 +10,10 @@
 			</v-layout>
 
 			<v-layout row justify-space-around>
-				<v-btn fab class="primary" @click="dialogIncome">
+				<v-btn fab class="primary" @click="dialogIncome(date)">
 					<v-icon>{{$vuetify.icons.add}}</v-icon>
 				</v-btn>
-				<v-btn fab class="secondary" @click="dialogOutcome">
+				<v-btn fab class="secondary" @click="dialogOutcome(date)">
 					<v-icon>{{$vuetify.icons.remove}}</v-icon>
 				</v-btn>
 			</v-layout>
@@ -21,21 +21,25 @@
 			<v-timeline>
 				<v-timeline-item
 						v-for="(entry, i) in [...entries].reverse()"
-						:color="entry.color"
+						:color="getColor(entry)"
+						:icon="getCategoryIcon(entry)"
 						:key="i"
 						:left="Boolean(entry.type)"
 						:right="Boolean(!entry.type)"
+						fill-dot
 						class="`text-sm-${entry.type ? 'left' : 'right'}`"
 				>
 
 					<div
 							slot="opposite"
-							:class="`headline ${!entry.type ? 'success' : 'warning'}--text py-3 `"
-					>${{entry.value}}
+							:class="`headline ${!entry.type ? 'success' : 'warning'}--text py-3 `">
+						${{entry.value}}
 					</div>
+
 					<div
-							slot="opposite"
-					>{{getEntryTime(entry.date)}}
+							slot="opposite">
+						{{getEntryTime(entry.date)}}
+
 						{{entry.description}}
 					</div>
 
@@ -44,10 +48,18 @@
 			</v-timeline>
 		</v-container>
 		<v-dialog v-model="isDialog.income" width="500" persistent>
-			<timeline-entry :title="'Income'" @dismiss="isDialog.income = false"></timeline-entry>
+			<timeline-entry
+					:date="activeDate"
+					:type="0"
+					@dismiss="isDialog.income = false"
+					:visible="isDialog.income"></timeline-entry>
 		</v-dialog>
 		<v-dialog v-model="isDialog.outcome" width="500" >
-			<timeline-entry :title="'Outcome'" @dismiss="isDialog.outcome = false"></timeline-entry>
+			<timeline-entry
+					:date="activeDate"
+					:type="1"
+					@dismiss="isDialog.outcome = false"
+					:visible="isDialog.outcome"></timeline-entry>
 		</v-dialog>
 
 	</v-layout>
@@ -68,6 +80,7 @@
 					income: false,
 					outcome: false
 				},
+				activeDate: null
 			}
 		},
 		components: { TimelineEntry },
@@ -102,19 +115,53 @@
 			getDay(dateStr) {
 				return new Date(dateStr).getDate();
 			},
+
 			getYear: (dateStr) => new Date(dateStr).getFullYear(),
+
 			getDayName(dateStr) {
 				return new Date(dateStr).toLocaleDateString('en-us', { weekday: 'long' });
 			},
+
 			getMonthName(dateStr) {
 				return new Date(dateStr).toLocaleDateString('en-us', { month: 'long' });
 			},
+
 			getEntryTime: (dateStr) => new Date(dateStr).toLocaleTimeString('en-us', {}),
-			dialogIncome() {
+
+			dialogIncome(date) {
+				this.activeDate = date;
 				this.isDialog.income = true;
 			},
-			dialogOutcome() {
+
+			dialogOutcome(date) {
+				this.activeDate = date;
 				this.isDialog.outcome = true;
+			},
+			
+			getColor(entry) {
+				if(entry.category) {
+					const key = entry.category;
+					const selected = this.$store.state.categories[key];
+					return selected ? selected.color : (entry.type === 1 ? 'red' : 'green');
+				}
+				else {
+					return entry.type === 1 ? 'red' : 'green';
+				}
+			},
+			getCategoryIcon(entry) {
+				if(entry.category) {
+					const selected = this.$store.state.categories[entry.category];
+					return selected.icon ? selected.icon : this.$vuetify.icons.budget;
+				}
+				else {
+					return this.$vuetify.icons.budget
+				}
+			}
+		},
+		watch: {
+			'isDialog.income': function() {
+
+				// this.$nextTick(this.$refs.amountInput.focus())
 			}
 		}
 	}

@@ -1,11 +1,11 @@
 <template>
 	<v-app id="app">
-		<AppNav :open="isNavOpen"></AppNav>
+		<AppNav :open="isNavOpen" @input="(value) => isNavOpen = value"></AppNav>
 		<v-toolbar dark app id="nav" class="primary">
 			<v-icon @click="isNavOpen = !isNavOpen">fas fa-list</v-icon>
 			<v-toolbar-title>Manager</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-toolbar-items class="hidden-sm-and-down">
+			<v-toolbar-items>
 				<v-btn flat to="/">Timeline</v-btn>
 				<!--<v-btn flat to="/regular">Regular</v-btn>-->
 				<v-btn flat to="/reports">Reports</v-btn>
@@ -32,6 +32,9 @@
 		data: () => ({
 			isNavOpen: true,
 		}),
+		created() {
+			this.isNavOpen = this.$vuetify.breakpoint.mdAndUp;
+		}
 
 	}
 </script>

@@ -30,9 +30,7 @@
 		data: () => ({
 			options: {
 				bar: {
-					annotations: {
-
-					},
+					annotations: {},
 					theme: {
 						// palette: 'palette2'
 					},
@@ -53,18 +51,13 @@
 							// colors: ['red']
 						},
 						textAnchor: 'start',
-						formatter: function(val, opt) {
-							return '..' + ":  " + val
-						},
+						formatter: (val) => '$' + val,
 						offsetX: 0
 						// position: 'bottom'
 					},
 					stroke: {
 						width: 1,
 						// colors: ['#fff']
-					},
-					xaxis: {
-						categories: ['Korea', 'Canada', 'Poland', 'Italy', 'France', 'Japan', 'China'],
 					},
 					legend: {
 						show: true,
@@ -89,33 +82,47 @@
 						}
 					}]
 				},
-				pie: {
-					labels: ["Apple", "Mango", "Banana", "Papaya", "Orange"],
-
-				}
+				pie: {}
 			},
 			series: {
 				bar: [{
-					name: 'series-1',
-					// data: [30, 40, 45, 50, 49, 60, 70, 91],
-					data: [{ x: '05/06/2014', y: 54 }, { x: '05/08/2014', y: 17 }, { x: '05/28/2014', y: 26 }]
-					// data: [{
-					// 	x: 'Apple',
-					// 	y: 54
-					// }, {
-					// 	x: 'Orange',
-					// 	y: 66
-					// }],
-					// data: [[1324508400000, 34], [1324594800000, 54], [1326236400000, 43]]
-
+					name: '',
+					data: [30, 40, 45, 50, 49, 60, 70, 81]
 				}],
-				pie: [30, 40, 45, 50, 49, 60, 70, 91]
+				pie: [30, 40, 45, 50, 49, 60, 70, 81]
 			}
 		}),
+		computed: {
+			wastes() {
+				return this.$store.getters.totalWastes;
+			},
+		},
 		mounted() {
+			const labels = Object.keys(this.wastes);
+			const series = labels.map((k) => this.wastes[k]);
 
-		}
-		,
+			this.options = {
+				...this.options,
+				...{
+					bar: {
+						xaxis: {
+							categories: labels
+						}
+					},
+					pie: {
+						labels: labels
+					}
+				}
+			}
+
+			this.series = {
+				bar: [{
+					name: 'Total',
+					data: series,
+				}],
+				pie: series
+			}
+		},
 		methods: {
 			updateChart() {
 				const max = 90;
@@ -128,8 +135,7 @@
 					data: newData
 				}]
 			}
-		}
-		,
+		},
 
 	}
 </script>

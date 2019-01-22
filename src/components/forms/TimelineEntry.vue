@@ -4,19 +4,44 @@
 				class="headline"
 				primary-title
 		>
-			Add {{title}}
+			Add {{type === 0 ? 'Income' : 'Outcome'}}
 		</v-card-title>
 
 		<v-card-text>
+
+
+			<v-input
+					prepend-icon="$vuetify.icons.total"
+					:messages="['Amount']"
+					class="display-1"
+			>
+				<input ref="amountInput" type="number" placeholder="100" v-model="amount">
+			</v-input>
+
+			<v-select
+					v-if="type === 1"
+					v-model="category"
+					:items="categories"
+					:placeholder="'Category'"
+					:prepend-icon="category.icon"
+			>
+				<template slot="selection" slot-scope="data">
+					{{data.item.name}}
+				</template>
+				<template slot="item" slot-scope="data">
+					{{data.item.name}}
+				</template>
+
+			</v-select>
+
 			<v-text-field
 					v-model="description"
-					label="Description"
+					placeholder="Description"
 			></v-text-field>
-			<v-text-field
-					v-model="amount"
-					type="number"
-					label="Amount"
-			></v-text-field>
+
+
+
+
 
 			<v-menu
 					ref="manualTime"
@@ -45,6 +70,7 @@
 						readonly
 				></v-text-field>
 
+
 				<v-time-picker
 						v-model="time"
 						@change="$refs.manualTime.save(time)"
@@ -68,7 +94,8 @@
 
 			<v-btn
 					color="primary"
-					@click=""
+					:disabled="!amount"
+					@click="addEntry"
 			>
 				Add
 			</v-btn>
@@ -80,19 +107,62 @@
 </template>
 
 <script>
+	import moment from 'moment'
+
 	export default {
 		props: {
-			title: {
-				type: String
-			},
+			type: Number,
+			visible: Boolean,
+			date: String
 		},
 		data: () => ({
 			amount: '',
 			description: '',
 			time: null,
+			category: {},
 			dialog: {
-				manualTime: false
+				manualTime: false,
+				description: false
 			}
-		})
+		}),
+		computed: {
+			categories() {
+				return this.$store.getters.categoriesArray;
+			}
+		},
+		methods: {
+			addEntry() {
+				let time = this.time;
+				let today = new Date();
+
+				if(time) {
+					const d = moment(time, 'HH:mm');
+					const target = moment(this.date);
+
+					d.month(target.month());
+					d.year(target.year());
+
+					time = d._d;
+
+				}
+				let data = {
+					amount: this.amount,
+					description: this.description,
+					time: time ? time : today,
+					category: this.category.name ? this.category.name : null,
+					date: this.date,
+					type: this.type
+				};
+
+				this.$store.commit('addEntry', data);
+				this.$emit('dismiss');
+			}
+		},
+		watch: {
+			visible() {
+				this.$refs.amountInput.focus();
+			}
+		}
+
 	}
 </script>

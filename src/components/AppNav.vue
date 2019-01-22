@@ -1,5 +1,5 @@
 <template>
-	<v-navigation-drawer app dark :value="open" mobile-break-point="1024" class="">
+	<v-navigation-drawer app dark v-model="localDrawer" mobile-break-point="1024" @input="$emit('close')">
 
 		<v-layout column justify-space-between fill-height>
 			<div>
@@ -100,11 +100,12 @@
 
 	export default {
 		props: {
-			open: Boolean
+			open: Boolean,
 		},
 		data: () => ({
 			loader: null,
 			loading3: false,
+			localDrawer: false
 		}),
 		computed: mapState([
 			'total',
@@ -112,6 +113,9 @@
 			'username',
 			'budget'
 		]),
+		mounted() {
+			this.localDrawer = this.open;
+		},
 		watch: {
 			loader () {
 				const l = this.loader
@@ -120,6 +124,12 @@
 				setTimeout(() => (this[l] = false), 3000)
 
 				this.loader = null
+			},
+			open: function(next) {
+				this.localDrawer = next;
+			},
+			localDrawer: function(next) {
+				this.$emit('input', next)
 			}
 		}
 	}
